@@ -1,7 +1,9 @@
 var fs = require('fs');
 
-const rawData = fs.readFileSync('./data.json');
+const rawData = fs.readFileSync('./dissertation-adapter/data.json');
 const data = JSON.parse(rawData);
+
+// Probably remove validation, now covered by validation()
 
 function filterSummaryStatisticData(record) {
     if (

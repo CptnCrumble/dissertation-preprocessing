@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-const rawData = fs.readFileSync('./data.json');
+const rawData = fs.readFileSync('./dissertation-adapter/data.json');
 const data = JSON.parse(rawData);
 
 function findIndex(number,timepoint,array) {
@@ -26,10 +26,18 @@ function createTrainData(number,timepoint,array) {
     return output;
 }
 
-// Seperate test & train for N=2, T=0
-let testData = createTestData(2,0,data);
-let trainData = createTrainData(2,0,data);
+function splitData(number,timepoint,array){
+    let testData = createTestData(2,0,data);
+    let trainData = createTrainData(2,0,data);
+    return {
+        'testData':testData,
+        'trainingData': trainData
+    };
+}
 
-console.log(testData);
-console.log(trainData.length);
+// Seperate test & train for N=2, T=0
+let x = splitData(2,0,data);
+
+console.log(x.testData);
+console.log(x.trainingData.length);
 console.log(data.length)
