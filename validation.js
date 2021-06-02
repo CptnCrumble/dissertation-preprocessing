@@ -131,6 +131,8 @@ const pdssValidator = {
     ]
 }
 
+
+
 // const pdq8Validator = {
 //     'allowedValues':[0,1,2,3],
 //     'keys': []
@@ -163,11 +165,52 @@ function validate(validatorObject,dataObject) {
     return output.reduce((a,b) => {return a && b});
 }
 
+// --------------- Validate summary statistics ----------------------------------------------------------------
+
+function summaryValidate(dataObject,key) {
+    let value = dataObject[key];
+    return value !== undefined && 
+        value !== "N/A" &&
+        typeof value === 'number';
+}
+
+function summaryStatistics(dataObject) {    
+    let summaryKeys = [
+        "NMS TOTAL",
+        "PDSS TOTAL",
+        "PDQ TOTAL",
+        "PDQSI",
+        "Anxiety",
+        "Depression",
+        "BKS",
+        "DKS",
+        "FDS",
+        "PTI",
+        "PTT",
+        "PDQ-SI ",
+        "Mob ",
+        "ADL ",
+        "Emot ",
+        "Stigma ",
+        "Soc Sup ",
+        "Cog ",
+        "Comm ",
+        "Discom ",
+        "PDQ-C-SI"
+    ];
+    let results = summaryKeys.map( x => {        
+        return summaryValidate(dataObject,x);
+    })
+
+    return results.reduce((a,b) => {return a && b});
+}
+
 module.exports = {
     hadsValidator,
     nmsValidator,
     pdqcValidator,
     updrsValidator,
     pdssValidator,
-    validate
+    validate,
+    summaryStatistics
 }
