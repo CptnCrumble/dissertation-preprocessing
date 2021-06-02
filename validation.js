@@ -1,10 +1,5 @@
-var fs = require('fs');
-
-const rawData = fs.readFileSync('./dissertation-adapter/data.json');
-const data = JSON.parse(rawData);
-
-// ---- Validation Objects - 1 per questionnaire ---------------------------------------------------------------------
-const hadsValidation = {
+// ---- Validator Objects - 1 per questionnaire ---------------------------------------------------------------------
+const hadsValidator = {
     'allowedValues':[0,1,2,3],
     'keys': [
         'HADS TENSE',
@@ -24,7 +19,7 @@ const hadsValidation = {
     ]
 }
 
-const nmsValidation = {
+const nmsValidator = {
     'allowedValues':[0,1],
     'keys': [
         'NMS1',
@@ -61,7 +56,7 @@ const nmsValidation = {
     ]
 }
 
-const pdqcValidation = {
+const pdqcValidator = {
     'allowedValues':[0,1,2,3,4],
     'keys': [
         'pdqc 1',
@@ -96,7 +91,7 @@ const pdqcValidation = {
     ]
 }
 
-const updrsValidation = {
+const updrsValidator = {
     'allowedValues':[0,1,2,3,4],
     'keys': [
         '2.1',
@@ -115,7 +110,7 @@ const updrsValidation = {
     ]
 }
 
-const pdssValidation = {
+const pdssValidator = {
     'allowedValues':[0,1,2,3,4],
     'keys': [
         'PDSS1',
@@ -136,29 +131,29 @@ const pdssValidation = {
     ]
 }
 
-// const pdq8Validation = {
+// const pdq8Validator = {
 //     'allowedValues':[0,1,2,3],
 //     'keys': []
 // }
 
-// const Validation = {
+// const Validator = {
 //     'allowedValues':[],
 //     'keys': []
 // }
 
-// const Validation = {
+// const Validator = {
 //     'allowedValues':[],
 //     'keys': []
 // }
 
-// -------------- Validation Function --------------------------------------------------------
+// -------------- Validation Function - returns bool--------------------------------------------------------
 
-function validate(validationObject,dataObject) {
+function validate(validatorObject,dataObject) {
     let output = [];
-    validationObject.keys.forEach(key => {
+    validatorObject.keys.forEach(key => {
         if(key in dataObject) {            
             output.push(
-                validationObject.allowedValues.includes(dataObject[key])
+                validatorObject.allowedValues.includes(dataObject[key])
             );            
         } else {
             output.push(false);
@@ -168,6 +163,11 @@ function validate(validationObject,dataObject) {
     return output.reduce((a,b) => {return a && b});
 }
 
-data.map(x => {
-    if(!validate(pdssValidation,x)) {console.log(x['Number'],x['Timepoint'])}
-});
+module.exports = {
+    hadsValidator,
+    nmsValidator,
+    pdqcValidator,
+    updrsValidator,
+    pdssValidator,
+    validate
+}
