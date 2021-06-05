@@ -1,8 +1,9 @@
 // WIP
 
-function filterSummaryStatisticData(record) {
-   
+function getSummaryStatisticData(record) {   
         return {
+            'Number': record['Number'],
+            'Timepoint': record['Timepoint'],
             'NMS TOTAL': record['NMS TOTAL'],
             'PDSS TOTAL': record['PDSS TOTAL'],
             'PDQ TOTAL': record['PDQ TOTAL'],
@@ -24,6 +25,7 @@ function filterSummaryStatisticData(record) {
             'Comm ': record['Comm '],
             'Discom ': record['Discom '],
             'PDQ-C-SI': record['PDQ-C-SI']
-        }
-  
+        }  
 }
+
+module.exports = {getSummaryStatisticData};
