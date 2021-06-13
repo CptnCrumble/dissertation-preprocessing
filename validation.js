@@ -196,7 +196,9 @@ function baseValidate(dataObject,parameter){
 }
 
 // Validate that a data object has valid values for ALL requested parameters
-function validate(parameterList,dataObject) {
+function validate(dataSpecification,dataObject) {
+    let parameterList = JSON.parse(JSON.stringify(dataSpecification['source']));
+    parameterList.push(dataSpecification['subject']);
     let output = [];
     parameterList.forEach( function(p) {
             if(summaryKeys.includes(p)){
